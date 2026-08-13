@@ -8,7 +8,7 @@ const studentRoutes = require("./routes/student.routes");
 const teacherRoutes = require("./routes/teacher.routes");
 const courseRoutes = require("./routes/course.routes");
 const attendanceRoutes = require("./routes/attendance.routes");
-
+const markRoutes = require("./routes/mark.routes");
 
 dotenv.config();
 
@@ -24,7 +24,7 @@ app.use("/api/students", studentRoutes);
 app.use("/api/teachers", teacherRoutes);
 app.use("/api/courses", courseRoutes);
 app.use("/api/attendance", attendanceRoutes);
-
+app.use("/api/marks", markRoutes);
 
 app.get("/", (req, res) => {
     res.json({
