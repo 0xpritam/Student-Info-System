@@ -7,6 +7,8 @@ import AdminLayout from "./layouts/AdminLayout";
 import Teachers from "./pages/admin/Teachers";
 import Courses from "./pages/admin/Courses";
 import Attendance from "./pages/admin/Attendance";
+import Marks from "./pages/admin/Marks";
+
 
 function App() {
     return (
@@ -58,6 +60,14 @@ function App() {
                     element={
                         <AdminLayout>
                             <Attendance />
+                        </AdminLayout>
+                    }
+                />
+                <Route
+                    path="/admin/marks"
+                    element={
+                        <AdminLayout>
+                            <Marks />
                         </AdminLayout>
                     }
                 />

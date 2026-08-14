@@ -60,8 +60,26 @@ const getStudentMarks = async (req, res) => {
         });
     }
 };
+const getAllMarks = async (req, res) => {
+    try {
+        const marks = await Mark.find()
+            .populate("courseId", "courseCode courseName")
+            .sort({ createdAt: -1 });
+
+        res.status(200).json({
+            marks,
+        });
+    } catch (error) {
+        console.error("Get all marks error:", error);
+
+        res.status(500).json({
+            message: "Server error",
+        });
+    }
+};
 
 module.exports = {
     addMark,
     getStudentMarks,
+     getAllMarks,
 };
