@@ -1,10 +1,9 @@
 const express = require("express");
 
 const {
-    createCourse,
-    getCourses,
-    getMyCourses,
-} = require("../controllers/course.controller");
+    enrollStudent,
+    getMyStudents,
+} = require("../controllers/enrollment.controller");
 
 const {
     authenticate,
@@ -17,21 +16,12 @@ router.post(
     "/",
     authenticate,
     authorize("admin"),
-    createCourse
+    enrollStudent
 );
-
 router.get(
     "/teacher/me",
     authenticate,
     authorize("teacher"),
-    getMyCourses
+    getMyStudents
 );
-
-router.get(
-    "/",
-    authenticate,
-    authorize("admin", "teacher", "student"),
-    getCourses
-);
-
 module.exports = router;

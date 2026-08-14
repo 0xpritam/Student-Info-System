@@ -1,4 +1,5 @@
 const Course = require("../models/course.models");
+const Teacher = require("../models/teacher.models");
 
 const createCourse = async (req, res) => {
     try {
@@ -77,8 +78,36 @@ const getCourses = async (req, res) => {
         });
     }
 };
+const getMyCourses = async (req, res) => {
+    try {
+        const teacher = await Teacher.findOne({
+            userId: req.user.userId,
+        });
+
+        if (!teacher) {
+            return res.status(404).json({
+                message: "Teacher profile not found",
+            });
+        }
+
+        const courses = await Course.find({
+            teacherId: teacher._id,
+        }).sort({ createdAt: -1 });
+
+        res.status(200).json({
+            courses,
+        });
+    } catch (error) {
+        console.error("Get teacher courses error:", error);
+
+        res.status(500).json({
+            message: "Server error",
+        });
+    }
+};
 
 module.exports = {
     createCourse,
     getCourses,
+    getMyCourses,
 };

@@ -16,7 +16,7 @@ const router = express.Router();
 router.post(
     "/",
     authenticate,
-    authorize("teacher", "admin"),
+    authorize("teacher"),
     addMark
 );
 router.get(
