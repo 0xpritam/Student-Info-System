@@ -6,7 +6,7 @@ import Students from "./pages/admin/Students";
 import AdminLayout from "./layouts/AdminLayout";
 import Teachers from "./pages/admin/Teachers";
 import Courses from "./pages/admin/Courses";
-
+import Attendance from "./pages/admin/Attendance";
 
 function App() {
     return (
@@ -53,6 +53,14 @@ function App() {
                     }
                 />
 
+                <Route
+                    path="/admin/attendance"
+                    element={
+                        <AdminLayout>
+                            <Attendance />
+                        </AdminLayout>
+                    }
+                />
                 <Route
                     path="/"
                     element={<Navigate to="/login" replace />}

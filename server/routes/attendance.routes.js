@@ -3,6 +3,7 @@ const express = require("express");
 const {
     markAttendance,
     getStudentAttendance,
+     getAllAttendance,
 } = require("../controllers/attendance.controller");
 
 const {
@@ -18,7 +19,12 @@ router.post(
     authorize("teacher", "admin"),
     markAttendance
 );
-
+router.get(
+    "/",
+    authenticate,
+    authorize("teacher", "admin"),
+    getAllAttendance
+);
 router.get(
     "/student/:studentId",
     authenticate,

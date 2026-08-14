@@ -55,8 +55,26 @@ const getStudentAttendance = async (req, res) => {
         });
     }
 };
+const getAllAttendance = async (req, res) => {
+    try {
+        const attendance = await Attendance.find()
+            .populate("courseId", "courseCode courseName")
+            .sort({ date: -1 });
+
+        res.status(200).json({
+            attendance,
+        });
+    } catch (error) {
+        console.error("Get all attendance error:", error);
+
+        res.status(500).json({
+            message: "Server error",
+        });
+    }
+};
 
 module.exports = {
     markAttendance,
     getStudentAttendance,
+    getAllAttendance,
 };
