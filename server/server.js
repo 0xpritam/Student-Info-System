@@ -13,11 +13,11 @@ const markRoutes = require("./routes/mark.routes");
 dotenv.config();
 
 const app = express();
+app.use(express.json());
 
 connectDB();
 
 app.use(cors());
-app.use(express.json());
 app.use("/api/auth", authRoutes);
 app.use("/api/test", testRoutes);
 app.use("/api/students", studentRoutes);

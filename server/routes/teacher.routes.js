@@ -3,6 +3,7 @@ const express = require("express");
 const {
     createTeacher,
     getTeachers,
+    getMyTeacherProfile,
 } = require("../controllers/teacher.controller");
 
 const {
@@ -24,6 +25,12 @@ router.get(
     authenticate,
     authorize("admin"),
     getTeachers
+);
+router.get(
+    "/me",
+    authenticate,
+    authorize("teacher"),
+    getMyTeacherProfile
 );
 
 module.exports = router;

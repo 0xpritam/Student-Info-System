@@ -83,8 +83,32 @@ const getTeachers = async (req, res) => {
         });
     }
 };
+const getMyTeacherProfile = async (req, res) => {
+    try {
+        const teacher = await Teacher.findOne({
+            userId: req.user.userId,
+        }).populate("userId", "name email");
+
+        if (!teacher) {
+            return res.status(404).json({
+                message: "Teacher profile not found",
+            });
+        }
+
+        res.status(200).json({
+            teacher,
+        });
+    } catch (error) {
+        console.error("Get teacher profile error:", error);
+
+        res.status(500).json({
+            message: "Server error",
+        });
+    }
+};
 
 module.exports = {
     createTeacher,
     getTeachers,
+    getMyTeacherProfile,
 };

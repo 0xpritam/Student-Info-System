@@ -8,7 +8,7 @@ import Teachers from "./pages/admin/Teachers";
 import Courses from "./pages/admin/Courses";
 import Attendance from "./pages/admin/Attendance";
 import Marks from "./pages/admin/Marks";
-
+import TeacherDashboard from "./pages/teacher/TeacherDashboard";
 
 function App() {
     return (
@@ -74,6 +74,10 @@ function App() {
                 <Route
                     path="/"
                     element={<Navigate to="/login" replace />}
+                />
+                <Route
+                    path="/teacher"
+                    element={<TeacherDashboard />}
                 />
 
             </Routes>
