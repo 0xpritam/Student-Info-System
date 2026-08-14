@@ -1,5 +1,12 @@
 import { useEffect, useState } from "react";
 import api from "../../services/api";
+import {
+    CalendarCheck,
+    ClipboardList,
+    CheckCircle2,
+    XCircle,
+    Loader2,
+} from "lucide-react";
 
 export default function Attendance() {
     const [students, setStudents] = useState([]);
@@ -17,28 +24,28 @@ export default function Attendance() {
     const [submitting, setSubmitting] = useState(false);
 
     const fetchData = async () => {
-    try {
-        const [studentsRes, coursesRes] = await Promise.all([
-            api.get("/students"),
-            api.get("/courses"),
-        ]);
+        try {
+            const [studentsRes, coursesRes] = await Promise.all([
+                api.get("/students"),
+                api.get("/courses"),
+            ]);
 
-        setStudents(studentsRes.data.students);
-        setCourses(coursesRes.data.courses);
-    } catch (error) {
-        console.error("Failed to fetch students/courses:", error);
-    }
+            setStudents(studentsRes.data.students);
+            setCourses(coursesRes.data.courses);
+        } catch (error) {
+            console.error("Failed to fetch students/courses:", error);
+        }
 
-    try {
-        const attendanceRes = await api.get("/attendance");
+        try {
+            const attendanceRes = await api.get("/attendance");
 
-        setAttendance(attendanceRes.data.attendance);
-    } catch (error) {
-        console.error("Failed to fetch attendance:", error);
-    } finally {
-        setLoading(false);
-    }
-};
+            setAttendance(attendanceRes.data.attendance);
+        } catch (error) {
+            console.error("Failed to fetch attendance:", error);
+        } finally {
+            setLoading(false);
+        }
+    };
 
     useEffect(() => {
         fetchData();
@@ -79,21 +86,26 @@ export default function Attendance() {
 
     return (
         <div>
-            <div className="mb-8">
-                <h1 className="text-3xl font-bold">
-                    Attendance
-                </h1>
-
-                <p className="mt-1 text-neutral-400">
-                    Mark and monitor student attendance.
-                </p>
+            <div className="mb-8 flex items-center gap-3">
+                <div className="flex h-11 w-11 items-center justify-center rounded-xl bg-violet-500/10">
+                    <CalendarCheck className="h-6 w-6 text-violet-400" strokeWidth={1.75} />
+                </div>
+                <div>
+                    <h1 className="text-3xl font-bold text-white">
+                        Attendance
+                    </h1>
+                    <p className="mt-1 text-neutral-400">
+                        Mark and monitor student attendance.
+                    </p>
+                </div>
             </div>
 
             <form
                 onSubmit={handleSubmit}
-                className="mb-8 rounded-2xl border border-white/10 bg-white/[0.04] p-6"
+                className="mb-8 rounded-2xl border border-white/10 bg-gradient-to-br from-violet-500/[0.06] via-white/[0.03] to-transparent p-6 backdrop-blur-sm"
             >
-                <h2 className="mb-6 text-xl font-semibold">
+                <h2 className="mb-6 flex items-center gap-2 text-xl font-semibold text-white">
+                    <ClipboardList className="h-5 w-5 text-violet-400" strokeWidth={1.75} />
                     Mark Attendance
                 </h2>
 
@@ -109,7 +121,7 @@ export default function Attendance() {
                                 setStudentId(e.target.value)
                             }
                             required
-                            className="w-full rounded-xl border border-white/10 bg-black px-4 py-3 text-white outline-none focus:border-white/40"
+                            className="w-full rounded-xl border border-white/10 bg-black/60 px-4 py-3 text-white outline-none transition-colors focus:border-violet-400/50"
                         >
                             <option value="">
                                 Select Student
@@ -138,7 +150,7 @@ export default function Attendance() {
                                 setCourseId(e.target.value)
                             }
                             required
-                            className="w-full rounded-xl border border-white/10 bg-black px-4 py-3 text-white outline-none focus:border-white/40"
+                            className="w-full rounded-xl border border-white/10 bg-black/60 px-4 py-3 text-white outline-none transition-colors focus:border-violet-400/50"
                         >
                             <option value="">
                                 Select Course
@@ -168,7 +180,7 @@ export default function Attendance() {
                                 setDate(e.target.value)
                             }
                             required
-                            className="w-full rounded-xl border border-white/10 bg-black px-4 py-3 text-white outline-none focus:border-white/40"
+                            className="w-full rounded-xl border border-white/10 bg-black/60 px-4 py-3 text-white outline-none transition-colors focus:border-violet-400/50"
                         />
                     </div>
 
@@ -182,7 +194,7 @@ export default function Attendance() {
                             onChange={(e) =>
                                 setStatus(e.target.value)
                             }
-                            className="w-full rounded-xl border border-white/10 bg-black px-4 py-3 text-white outline-none focus:border-white/40"
+                            className="w-full rounded-xl border border-white/10 bg-black/60 px-4 py-3 text-white outline-none transition-colors focus:border-violet-400/50"
                         >
                             <option value="present">
                                 Present
@@ -198,8 +210,11 @@ export default function Attendance() {
                 <button
                     type="submit"
                     disabled={submitting}
-                    className="mt-6 rounded-xl bg-white px-5 py-3 font-medium text-black transition hover:bg-neutral-200 disabled:cursor-not-allowed disabled:opacity-50"
+                    className="mt-6 flex items-center gap-2 rounded-xl bg-white px-5 py-3 font-medium text-black transition hover:bg-neutral-200 disabled:cursor-not-allowed disabled:opacity-50"
                 >
+                    {submitting && (
+                        <Loader2 className="h-4 w-4 animate-spin" />
+                    )}
                     {submitting
                         ? "Marking..."
                         : "Mark Attendance"}
@@ -208,7 +223,7 @@ export default function Attendance() {
 
             <div className="overflow-hidden rounded-2xl border border-white/10 bg-white/[0.04]">
                 <div className="border-b border-white/10 px-6 py-5">
-                    <h2 className="text-xl font-semibold">
+                    <h2 className="text-xl font-semibold text-white">
                         Attendance Records
                     </h2>
                 </div>
@@ -242,7 +257,10 @@ export default function Attendance() {
                                         colSpan="4"
                                         className="px-6 py-10 text-center text-neutral-400"
                                     >
-                                        Loading attendance...
+                                        <div className="flex items-center justify-center gap-2">
+                                            <Loader2 className="h-4 w-4 animate-spin" />
+                                            Loading attendance...
+                                        </div>
                                     </td>
                                 </tr>
                             ) : attendance.length === 0 ? (
@@ -265,14 +283,14 @@ export default function Attendance() {
                                     return (
                                         <tr
                                             key={record._id}
-                                            className="border-b border-white/5 hover:bg-white/[0.03]"
+                                            className="border-b border-white/5 transition-colors hover:bg-white/[0.03]"
                                         >
-                                            <td className="px-6 py-4">
+                                            <td className="px-6 py-4 text-white">
                                                 {student?.userId?.name ||
                                                     "Unknown Student"}
                                             </td>
 
-                                            <td className="px-6 py-4">
+                                            <td className="px-6 py-4 text-neutral-300">
                                                 {record.courseId
                                                     ?.courseCode ||
                                                     "-"}
@@ -282,7 +300,7 @@ export default function Attendance() {
                                                     "-"}
                                             </td>
 
-                                            <td className="px-6 py-4">
+                                            <td className="px-6 py-4 text-neutral-300">
                                                 {new Date(
                                                     record.date
                                                 ).toLocaleDateString()}
@@ -293,10 +311,15 @@ export default function Attendance() {
                                                     className={
                                                         record.status ===
                                                         "present"
-                                                            ? "rounded-full bg-green-500/10 px-3 py-1 text-sm text-green-400"
-                                                            : "rounded-full bg-red-500/10 px-3 py-1 text-sm text-red-400"
+                                                            ? "inline-flex items-center gap-1.5 rounded-full bg-green-500/10 px-3 py-1 text-sm font-medium text-green-400"
+                                                            : "inline-flex items-center gap-1.5 rounded-full bg-red-500/10 px-3 py-1 text-sm font-medium text-red-400"
                                                     }
                                                 >
+                                                    {record.status === "present" ? (
+                                                        <CheckCircle2 className="h-3.5 w-3.5" />
+                                                    ) : (
+                                                        <XCircle className="h-3.5 w-3.5" />
+                                                    )}
                                                     {record.status}
                                                 </span>
                                             </td>

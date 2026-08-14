@@ -20,6 +20,15 @@ import {
     DialogTitle,
 } from "@/components/ui/dialog";
 
+import {
+    BookOpen,
+    Search,
+    Plus,
+    Pencil,
+    Trash2,
+    GraduationCap,
+} from "lucide-react";
+
 export default function Courses() {
     const [courses, setCourses] = useState([]);
     const [teachers, setTeachers] = useState([]);
@@ -156,14 +165,19 @@ export default function Courses() {
     return (
         <div>
             <div className="mb-8 flex items-center justify-between">
-                <div>
-                    <h1 className="text-3xl font-bold">
-                        Courses
-                    </h1>
+                <div className="flex items-center gap-3">
+                    <div className="flex h-11 w-11 items-center justify-center rounded-xl bg-violet-500/10">
+                        <BookOpen className="h-6 w-6 text-violet-400" strokeWidth={1.75} />
+                    </div>
+                    <div>
+                        <h1 className="text-3xl font-bold text-white">
+                            Courses
+                        </h1>
 
-                    <p className="mt-1 text-neutral-400">
-                        Manage courses and assigned teachers.
-                    </p>
+                        <p className="mt-1 text-neutral-400">
+                            Manage courses and assigned teachers.
+                        </p>
+                    </div>
                 </div>
 
                 <button
@@ -171,20 +185,24 @@ export default function Courses() {
                         resetForm();
                         setShowForm(true);
                     }}
-                    className="rounded-xl bg-white px-5 py-3 font-medium text-black transition hover:bg-neutral-200"
+                    className="flex items-center gap-2 rounded-xl bg-white px-5 py-3 font-medium text-black transition hover:bg-neutral-200"
                 >
-                    + Add Course
+                    <Plus className="h-4 w-4" strokeWidth={2.5} />
+                    Add Course
                 </button>
             </div>
 
             <div className="mb-4 flex items-center justify-between">
-                <input
-                    type="text"
-                    placeholder="Search courses..."
-                    value={search}
-                    onChange={(e) => setSearch(e.target.value)}
-                    className="w-80 rounded-xl border border-white/10 bg-white/[0.04] px-4 py-3 text-white outline-none placeholder:text-neutral-500 focus:border-white/30"
-                />
+                <div className="relative w-80">
+                    <Search className="pointer-events-none absolute left-4 top-1/2 h-4 w-4 -translate-y-1/2 text-neutral-500" />
+                    <input
+                        type="text"
+                        placeholder="Search courses..."
+                        value={search}
+                        onChange={(e) => setSearch(e.target.value)}
+                        className="w-full rounded-xl border border-white/10 bg-white/[0.04] py-3 pl-11 pr-4 text-white outline-none placeholder:text-neutral-500 transition-colors focus:border-violet-400/50"
+                    />
+                </div>
 
                 <p className="text-sm text-neutral-500">
                     {courses.length} courses
@@ -235,7 +253,7 @@ export default function Courses() {
                                     onChange={handleChange}
                                     required
                                     placeholder="CS201"
-                                    className="w-full rounded-xl border border-white/10 bg-black px-4 py-3 text-white outline-none focus:border-white/40"
+                                    className="w-full rounded-xl border border-white/10 bg-black/60 px-4 py-3 text-white outline-none transition-colors focus:border-violet-400/50"
                                 />
                             </div>
 
@@ -250,7 +268,7 @@ export default function Courses() {
                                     onChange={handleChange}
                                     required
                                     placeholder="Data Structures"
-                                    className="w-full rounded-xl border border-white/10 bg-black px-4 py-3 text-white outline-none focus:border-white/40"
+                                    className="w-full rounded-xl border border-white/10 bg-black/60 px-4 py-3 text-white outline-none transition-colors focus:border-violet-400/50"
                                 />
                             </div>
 
@@ -265,7 +283,7 @@ export default function Courses() {
                                     onChange={handleChange}
                                     required
                                     placeholder="Computer Science & Engineering"
-                                    className="w-full rounded-xl border border-white/10 bg-black px-4 py-3 text-white outline-none focus:border-white/40"
+                                    className="w-full rounded-xl border border-white/10 bg-black/60 px-4 py-3 text-white outline-none transition-colors focus:border-violet-400/50"
                                 />
                             </div>
 
@@ -282,7 +300,7 @@ export default function Courses() {
                                     value={form.semester}
                                     onChange={handleChange}
                                     required
-                                    className="w-full rounded-xl border border-white/10 bg-black px-4 py-3 text-white outline-none focus:border-white/40"
+                                    className="w-full rounded-xl border border-white/10 bg-black/60 px-4 py-3 text-white outline-none transition-colors focus:border-violet-400/50"
                                 />
                             </div>
 
@@ -296,7 +314,7 @@ export default function Courses() {
                                     value={form.teacherId}
                                     onChange={handleChange}
                                     required
-                                    className="w-full rounded-xl border border-white/10 bg-black px-4 py-3 text-white outline-none focus:border-white/40"
+                                    className="w-full rounded-xl border border-white/10 bg-black/60 px-4 py-3 text-white outline-none transition-colors focus:border-violet-400/50"
                                 >
                                     <option value="">
                                         Select Teacher
@@ -327,7 +345,7 @@ export default function Courses() {
                                     value={form.credits}
                                     onChange={handleChange}
                                     required
-                                    className="w-full rounded-xl border border-white/10 bg-black px-4 py-3 text-white outline-none focus:border-white/40"
+                                    className="w-full rounded-xl border border-white/10 bg-black/60 px-4 py-3 text-white outline-none transition-colors focus:border-violet-400/50"
                                 />
                             </div>
                         </div>
@@ -462,10 +480,10 @@ export default function Courses() {
                                 filteredCourses.map((course) => (
                                     <tr
                                         key={course._id}
-                                        className="border-b border-white/5 hover:bg-white/[0.03]"
+                                        className="border-b border-white/5 transition-colors hover:bg-white/[0.03]"
                                     >
                                         <td className="px-6 py-4">
-                                            <div className="font-medium">
+                                            <div className="font-medium text-white">
                                                 {course.courseName}
                                             </div>
 
@@ -474,20 +492,25 @@ export default function Courses() {
                                             </div>
                                         </td>
 
-                                        <td className="px-6 py-4">
+                                        <td className="px-6 py-4 text-neutral-300">
                                             {course.department}
                                         </td>
 
                                         <td className="px-6 py-4">
-                                            {course.semester}
+                                            <span className="inline-flex items-center rounded-full bg-violet-500/10 px-2.5 py-1 text-xs font-medium text-violet-300">
+                                                Sem {course.semester}
+                                            </span>
                                         </td>
 
-                                        <td className="px-6 py-4">
-                                            {course.teacherId?.userId?.name ||
-                                                "-"}
+                                        <td className="px-6 py-4 text-neutral-300">
+                                            <div className="flex items-center gap-2">
+                                                <GraduationCap className="h-4 w-4 text-neutral-500" strokeWidth={1.75} />
+                                                {course.teacherId?.userId?.name ||
+                                                    "-"}
+                                            </div>
                                         </td>
 
-                                        <td className="px-6 py-4">
+                                        <td className="px-6 py-4 text-neutral-300">
                                             {course.credits}
                                         </td>
 
@@ -499,8 +522,9 @@ export default function Courses() {
                                                             course
                                                         )
                                                     }
-                                                    className="rounded-lg px-3 py-2 text-sm text-blue-400 hover:bg-blue-500/10"
+                                                    className="flex items-center gap-1.5 rounded-lg px-3 py-2 text-sm text-blue-400 transition-colors hover:bg-blue-500/10"
                                                 >
+                                                    <Pencil className="h-3.5 w-3.5" />
                                                     Edit
                                                 </button>
 
@@ -510,8 +534,9 @@ export default function Courses() {
                                                             course._id
                                                         )
                                                     }
-                                                    className="rounded-lg px-3 py-2 text-sm text-red-400 hover:bg-red-500/10"
+                                                    className="flex items-center gap-1.5 rounded-lg px-3 py-2 text-sm text-red-400 transition-colors hover:bg-red-500/10"
                                                 >
+                                                    <Trash2 className="h-3.5 w-3.5" />
                                                     Delete
                                                 </button>
                                             </div>
