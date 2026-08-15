@@ -4,6 +4,8 @@ const {
     addMark,
     getStudentMarks,
     getAllMarks,
+        getMyMarks,
+
 } = require("../controllers/mark.controller");
 
 const {
@@ -26,10 +28,17 @@ router.get(
     getAllMarks
 );
 router.get(
+    "/student/me",
+    authenticate,
+    authorize("student"),
+    getMyMarks
+);
+router.get(
     "/student/:studentId",
     authenticate,
     authorize("student", "teacher", "admin"),
     getStudentMarks
 );
+
 
 module.exports = router;

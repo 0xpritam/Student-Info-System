@@ -3,6 +3,7 @@ const express = require("express");
 const {
     enrollStudent,
     getMyStudents,
+    getMyCourses,
 } = require("../controllers/enrollment.controller");
 
 const {
@@ -23,5 +24,11 @@ router.get(
     authenticate,
     authorize("teacher"),
     getMyStudents
+);
+router.get(
+    "/student/me",
+    authenticate,
+    authorize("student"),
+    getMyCourses
 );
 module.exports = router;

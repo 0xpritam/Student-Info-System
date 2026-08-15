@@ -6,6 +6,7 @@ const {
     getStudentById,
     updateStudent,
     deleteStudent,
+    getMyStudentProfile,
 } = require("../controllers/student.controller");
 
 const { authenticate, authorize } = require("../middleware/auth.middleware");
@@ -25,7 +26,12 @@ router.get(
     authorize("admin", "teacher"),
     getStudents
 );
-
+router.get(
+    "/me",
+    authenticate,
+    authorize("student"),
+    getMyStudentProfile
+);
 router.get(
     "/:id",
     authenticate,

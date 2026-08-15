@@ -104,8 +104,39 @@ const getMyStudents = async (req, res) => {
         });
     }
 };
+const getMyCourses = async (req, res) => {
+    try {
+        const student = await Student.findOne({
+            userId: req.user.userId,
+        });
+
+        if (!student) {
+            return res.status(404).json({
+                message: "Student profile not found",
+            });
+        }
+
+        const enrollments = await Enrollment.find({
+            studentId: student._id,
+        }).populate(
+            "courseId",
+            "courseCode courseName department semester credits"
+        );
+
+        res.status(200).json({
+            courses: enrollments,
+        });
+    } catch (error) {
+        console.error("Get student courses error:", error);
+
+        res.status(500).json({
+            message: "Server error",
+        });
+    }
+};
 
 module.exports = {
     enrollStudent,
     getMyStudents,
+    getMyCourses,
 };

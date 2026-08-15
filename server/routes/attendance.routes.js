@@ -4,6 +4,7 @@ const {
     markAttendance,
     getStudentAttendance,
      getAllAttendance,
+     getMyAttendance,
 } = require("../controllers/attendance.controller");
 
 const {
@@ -24,6 +25,12 @@ router.get(
     authenticate,
     authorize("teacher", "admin"),
     getAllAttendance
+);
+router.get(
+    "/student/me",
+    authenticate,
+    authorize("student"),
+    getMyAttendance
 );
 router.get(
     "/student/:studentId",

@@ -14,6 +14,7 @@ import TeacherAttendance from "./pages/teacher/Attendance";
 import TeacherDashboard from "./pages/teacher/TeacherDashboard";
 import TeacherCourses from "./pages/teacher/Courses";
 import TeacherMarks from "./pages/teacher/Marks";
+import StudentDashboard from "./pages/student/StudentDashboard";
 
 function App() {
     return (
@@ -102,6 +103,10 @@ function App() {
                 <Route
                     path="/teacher/marks"
                     element={<TeacherMarks />}
+                />
+                <Route
+                    path="/student"
+                    element={<StudentDashboard />}
                 />
                 {/* Default */}
                 <Route

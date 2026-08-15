@@ -1,4 +1,6 @@
 const Attendance = require("../models/attendance.models");
+const Student = require("../models/student.models");
+
 
 const markAttendance = async (req, res) => {
     try {
@@ -72,9 +74,39 @@ const getAllAttendance = async (req, res) => {
         });
     }
 };
+const getMyAttendance = async (req, res) => {
+    try {
+        const student = await Student.findOne({
+            userId: req.user.userId,
+        });
+
+        if (!student) {
+            return res.status(404).json({
+                message: "Student profile not found",
+            });
+        }
+
+        const attendance = await Attendance.find({
+            studentId: student._id,
+        })
+            .populate("courseId", "courseCode courseName")
+            .sort({ date: -1 });
+
+        res.status(200).json({
+            attendance,
+        });
+    } catch (error) {
+        console.error("Get student attendance error:", error);
+
+        res.status(500).json({
+            message: "Server error",
+        });
+    }
+};
 
 module.exports = {
     markAttendance,
     getStudentAttendance,
     getAllAttendance,
+    getMyAttendance,
 };

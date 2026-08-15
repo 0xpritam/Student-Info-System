@@ -1,4 +1,5 @@
 const Mark = require("../models/mark.models");
+const Student = require("../models/student.models");
 
 const addMark = async (req, res) => {
     try {
@@ -77,9 +78,39 @@ const getAllMarks = async (req, res) => {
         });
     }
 };
+const getMyMarks = async (req, res) => {
+    try {
+        const student = await Student.findOne({
+            userId: req.user.userId,
+        });
 
+        if (!student) {
+            return res.status(404).json({
+                message: "Student profile not found",
+            });
+        }
+
+        const marks = await Mark.find({
+            studentId: student._id,
+        }).populate(
+            "courseId",
+            "courseCode courseName"
+        );
+
+        res.status(200).json({
+            marks,
+        });
+    } catch (error) {
+        console.error("Get student marks error:", error);
+
+        res.status(500).json({
+            message: "Server error",
+        });
+    }
+};
 module.exports = {
     addMark,
     getStudentMarks,
      getAllMarks,
+     getMyMarks,
 };
